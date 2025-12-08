@@ -359,6 +359,45 @@ abstract class CAndD implements SegmentInterface
 	{
 		return Fillers::truncateOrFill($this->bankAccountNumber, 12, Fillers::SPACE_FILLER);
 	}
+	
+    /**
+     * Set Item Trace Number (22 numeric characters)
+     *
+     * @param string|int $value
+     * @return $this
+     */
+    public function setItemTraceNumber($value)
+    {
+        $value = (string) $value;
+
+        if (!ctype_digit($value)) {
+            throw new \InvalidArgumentException('Item Trace Number must contain digits only.');
+        }
+
+        if (strlen($value) > 22) {
+            throw new \InvalidArgumentException('Item Trace Number must not exceed 22 characters.');
+        }
+
+        // Store raw; padding/truncation handled in getZeroFiller2()
+        $this->itemTraceNumber = $value;
+
+        return $this;
+    }
+
+    /**
+     * Get Item Trace Number (formatted to 22 chars)
+     *
+     * @return string
+     */
+    public function getItemTraceNumber()
+    {
+        if ($this->itemTraceNumber === null) {
+            return Fillers::generate(null, 22, Fillers::ZERO_FILLER);
+        }
+
+        // Left-pad with zeros / truncate to 22 as per spec
+        return Fillers::truncateOrFill($this->itemTraceNumber, 22, Fillers::ZERO_FILLER);
+    }
 
     /** 
      * Get Item Trace Number or Zero Filler
