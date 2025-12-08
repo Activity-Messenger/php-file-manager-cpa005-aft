@@ -76,6 +76,13 @@ abstract class CAndD implements SegmentInterface
 	 */
 	protected $bankAccountNumber;
 
+    /** 
+     * Item Trace Number
+     * [Length=22, Position[start]=65, Position[end]=86]
+     * @var string|null
+     */
+    protected $itemTraceNumber;
+
 	/**
 	 * Item Trace Number
 	 * [Length=22, Position[start]=65, Position[end]=86]
@@ -353,15 +360,23 @@ abstract class CAndD implements SegmentInterface
 		return Fillers::truncateOrFill($this->bankAccountNumber, 12, Fillers::SPACE_FILLER);
 	}
 
-	/**
-	 * Get Zero Filler
-	 *
-	 * @return string
-	 */
-	public function getZeroFiller2()
-	{
-		return Fillers::generate(null, 22, Fillers::ZERO_FILLER);
-	}
+    /** 
+     * Get Item Trace Number or Zero Filler
+     * 
+     * Historically this was pure zero filler. To support the CPA-005
+     * "Item Trace Number" field, we now return the trace number if set,
+     * otherwise fall back to 22 zeros for backward compatibility.
+     *
+     * @return string 
+     */
+    public function getZeroFiller2()
+    {
+        if ($this->itemTraceNumber !== null) {
+            return Fillers::truncateOrFill($this->itemTraceNumber, 22, Fillers::ZERO_FILLER);
+        }
+
+        return Fillers::generate(null, 22, Fillers::ZERO_FILLER);
+    }
 
 	/**
 	 * Get Zero Filler
