@@ -1,6 +1,6 @@
 {
 	"name": "oromedialab/php-file-manager",
-	"description": "PHP File Manager",
+	"description": "Canadian CPA-005 AFT bank-file writer",
 	"license": "MIT",
 	"keywords": ["php-file-manager"],
 	"authors": [
@@ -9,9 +9,6 @@
             "email": "azhar@iarmar.com"
         }
     ],
-    "require": {
-        "phpoffice/phpexcel": "^1.8"
-    },
     "require-dev": {
         "phpunit/phpunit": "4.0.*"
     },

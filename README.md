@@ -6,9 +6,10 @@ Developed and Maintained by Ibrahim Azhar Armar
 
 Introduction
 ------------
-PHP Utility Class to Manage Files and Operations
+This Activity Messenger fork provides the Canadian CPA-005 AFT bank-file writer.
+
+The unused legacy Excel reader and writer have been removed along with the abandoned PHPExcel dependency. Applications should use maintained PhpSpreadsheet tooling for spreadsheets.
 * [Canadian Payments Association - CPA-005 Writer](https://github.com/oromedialab/php-file-manager#1-canadian-payments-association---cpa-005-writer)
-* [XLS](https://github.com/oromedialab/php-file-manager#2-xls)
 
 #### Install using composer
 ```
@@ -17,7 +18,7 @@ composer require oromedialab/php-file-manager dev-master
 
 #### Install using GIT clone
 ```
-git clone https://github.com/oromedialab/php-file-manager.git
+git clone https://github.com/Activity-Messenger/php-file-manager-cpa005-aft.git
 ```
 
 1. Canadian Payments Association - CPA-005 Writer
@@ -108,39 +109,4 @@ $writer->setFile($file);
 $writer->download();
 // If you want to dump file content
 $writer->dump();
-```
-
-2. Xls
--------------
-Write, style and download array content to XLS file using simple to use syntax
-
-```php
-use Oml\PHPFileManager\Document\Xls;
-
-// Init XLS Writer
-$doc = new Xls\Writer;
-// Add Rows
-$doc->addRows(array('Ibrahim', 'Azhar', 'azhar@iarmar.com'));
-$doc->addRows(array('John', 'Doe', 'john@doe.com'));
-// Set width for column
-$doc->setWidthForColumn('A', 10);
-// Set background color for column range (without hash symbol)
-$doc->setBackgroundColorForColumnRange('A1:D1', '000000');
-// Set font color for column range  (without hash symbol)
-$doc->setFontColorForColumnRange('A1:D1', 'FFFFFF');
-// Align text for column range (HORIZONTAL_CENTER, HORIZONTAL_LEFT, HORIZONTAL_RIGHT)
-$doc->alignTextForColumnRange('A1:D1', 'HORIZONTAL_CENTER');
-// Trigger download
-$doc->download();
-
-// Init XLS Reader
-$doc = new Xls\Reader('/file/path/document.xlsx');
-// Replace column with indexes
-$doc->replaceColumnWithIndex('0', 'last_name');
-$doc->replaceColumnWithIndex('1', 'first_name');
-$doc->replaceColumnWithIndex('2', 'email');
-// Remove column with indexes
-$doc->removeColumnWithIndexes(array('25, 26, 27'));
-// Dump content
-$content = $doc->toArray();
 ```
